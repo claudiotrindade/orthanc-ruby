@@ -1,5 +1,6 @@
 require "orthanc/version"
 
+require 'json'
 require 'rest-client'
 require 'recursive-open-struct'
 require 'plissken'

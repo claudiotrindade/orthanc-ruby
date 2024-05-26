@@ -17,8 +17,16 @@ module Orthanc
     include Response
     attr_accessor :base_uri
 
-    def initialize(host = "localhost", port = 8042)
-      self.base_uri = RestClient::Resource.new("http://#{host}:#{port}")
+    def initialize(host = "localhost", port = 8042, user = "", password = "")
+      host = ENV['ORTHANC_HOST'] if ENV['ORTHANC_HOST'] != nil
+      port = ENV['ORTHANC_PORT'] if ENV['ORTHANC_PORT'] != nil
+      user = ENV['ORTHANC_USER'] if ENV['ORTHANC_USER'] != nil
+      password = ENV['ORTHANC_PASSWORD'] if ENV['ORTHANC_PASSWORD'] != nil
+      if user != "" && password != ""
+        self.base_uri = RestClient::Resource.new("http://#{host}:#{port}", user, password)
+      else
+        self.base_uri = RestClient::Resource.new("http://#{host}:#{port}")
+      end
     end
 
     # ------------- General -------------
